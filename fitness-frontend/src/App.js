@@ -1,13 +1,18 @@
-import Register from "./Register";
-import ExerciseForm from "./ExerciseForm";
-import './App.css'; // Assicurati di importare il file CSS dove applicherai le modifiche
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import ExercisePage from "./components/ExercisePage";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Fitness App</h1>
-      <Register />
-      <ExerciseForm />
+    <div>
+      <Routes>
+        <Route path="/" element={<Login />} />  {/* Login è la homepage */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />  {/* Assicurati che questa esista */}
+        <Route path="/exercises/:username" element={<ExercisePage />} />
+      </Routes>
     </div>
   );
 }

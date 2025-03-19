@@ -1,0 +1,60 @@
+/* src/components/ExerciseForm.css */
+
+/* Contenitore del form */
+.exercise-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Controlla la larghezza massima */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-height: 150px; /* Altezza minima per evitare che sia troppo piccolo */
+  max-height: 500px; /* Altezza massima per evitare che diventi enorme */
+  overflow-y: auto; /* Abilita lo scroll se ci sono troppi esercizi */
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out; /* Animazione fluida */
+}
+
+/* Spazio riservato per il messaggio di errore */
+.exercise-form .error-message {
+  min-height: 20px; /* Mantiene lo spazio sempre riservato */
+  color: red;
+  font-size: 0.9em;
+  text-align: center;
+  margin: 5px 0;
+}
+
+/* Stile per gli input e il select */
+.exercise-form select,
+.exercise-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Stile per il pulsante */
+.exercise-form button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  align-self: stretch; /* Allinea il pulsante all'interno del form */
+}
+
+.exercise-form button:hover {
+  background-color: #45a049;
+}
