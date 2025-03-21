@@ -91,20 +91,22 @@ const Register = () => {
             required
           />
 
-          {/* Checkbox Privacy */}
+          {/* Checkbox Privacy - Allineata accanto al testo */}
           <div className="privacy-container">
-            <input
-              type="checkbox"
-              id="privacyPolicy"
-              checked={acceptedPrivacy}
-              onChange={() => setAcceptedPrivacy(!acceptedPrivacy)}
-              required
-            />
-            <label htmlFor="privacyPolicy">
-              Ho letto e accetto l'
-              <a href="/privacy" target="_blank" rel="noopener noreferrer">
-                Informativa sulla Privacy
-              </a>
+            <label className="privacy-label">
+              <input
+                type="checkbox"
+                id="privacyPolicy"
+                checked={acceptedPrivacy}
+                onChange={() => setAcceptedPrivacy(!acceptedPrivacy)}
+                required
+              />
+              <span>
+                Ho più di 13 anni, ho letto e accetto l'
+                <a href="/privacy" target="_blank" rel="noopener noreferrer">
+                  Informativa sulla Privacy
+                </a>
+              </span>
             </label>
           </div>
 
