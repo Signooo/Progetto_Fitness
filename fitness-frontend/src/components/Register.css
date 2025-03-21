@@ -63,6 +63,12 @@ button:hover {
   background-color: #45a049;
 }
 
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Stile per il link di accesso */
 .login-link {
   margin-top: 15px;
   font-size: 14px;
@@ -71,5 +77,37 @@ button:hover {
 .login-link span {
   color: #007bff;
   cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Stile per la privacy checkbox */
+.privacy-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px; /* Spazio tra il checkbox e il testo */
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.privacy-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.privacy-label input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.privacy-label a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.privacy-label a:hover {
   text-decoration: underline;
 }
