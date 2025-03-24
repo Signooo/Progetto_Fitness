@@ -15,6 +15,7 @@
   },
   "scripts": {
     "preinstall": "npm install serve",
+    "postinstall": "chmod +x node_modules/.bin/react-scripts",
     "start": "node node_modules/.bin/serve -s build -l $PORT",
     "build": "react-scripts build",
     "test": "react-scripts test",
