@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config"; // Importa API_BASE_URL dal file di configurazione
 import "./Register.css";
 
 const Register = () => {
@@ -22,6 +23,7 @@ const Register = () => {
     setMessage("");
 
     const sanitizedUsername = username.trim().toLowerCase();
+    
     if (!sanitizedUsername) {
       setMessage("⚠️ Inserisci un username valido!");
       return;
@@ -33,7 +35,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/register", {
+      const response = await fetch(`${API_BASE_URL}/register`, { // ✅ Usa API_BASE_URL
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: sanitizedUsername, password }),
@@ -91,7 +93,7 @@ const Register = () => {
             required
           />
 
-          {/* Checkbox Privacy - Allineata accanto al testo */}
+          {/* Checkbox Privacy */}
           <div className="privacy-container">
             <label className="privacy-label">
               <input
@@ -110,7 +112,7 @@ const Register = () => {
             </label>
           </div>
 
-          {/* Pulsante disabilitato finché la checkbox non è selezionata */}
+          {/* Pulsante Registrati */}
           <button type="submit" disabled={!acceptedPrivacy}>
             Registrati
           </button>

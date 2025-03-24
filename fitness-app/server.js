@@ -2,13 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bcrypt = require("bcrypt"); // Importa bcrypt per criptare le password
+const bcrypt = require("bcrypt");
 
 const app = express();
 
-// Configurazione di CORS
+// Configurazione CORS per accettare richieste dal frontend online e locale
 const corsOptions = {
-  origin: "http://localhost:3000", 
+  origin: process.env.FRONTEND_URL || "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
 };
@@ -16,27 +16,27 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Connessione a MongoDB
+// Connessione a MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connesso con successo"))
   .catch(err => console.error("❌ Errore di connessione a MongoDB:", err));
 
-// Modello Utente con PASSWORD e SERIE
+// Modello Utente
 const UserSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
-  password: { type: String, required: true }, // Aggiunto il campo password
+  password: { type: String, required: true },
   exercises: [{ 
     name: String, 
     weight: Number, 
     reps: Number, 
-    sets: Number, // 👈 Aggiunto il campo "Serie"
+    sets: Number,
     date: Date 
   }],
 });
 
 const User = mongoose.model("User", UserSchema);
 
-// ✅ REGISTRAZIONE con password criptata
+// ✅ REGISTRAZIONE
 app.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -46,9 +46,8 @@ app.post("/register", async (req, res) => {
       return res.status(400).json({ message: "Utente già esistente" });
     }
 
-    // Cripta la password prima di salvarla
+    // Cripta la password
     const hashedPassword = await bcrypt.hash(password, 10);
-
     user = new User({ username, password: hashedPassword, exercises: [] });
     await user.save();
 
@@ -59,7 +58,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// ✅ LOGIN con verifica password
+// ✅ LOGIN
 app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -69,9 +68,7 @@ app.post("/login", async (req, res) => {
       return res.status(404).json({ message: "Utente non trovato" });
     }
 
-    // Confronta la password inserita con quella criptata nel database
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Password errata" });
     }
@@ -83,7 +80,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// ✅ Endpoint per aggiungere esercizi con serie
+// ✅ Aggiungere un esercizio
 app.post("/exercise", async (req, res) => {
   try {
     const { username, name, weight, reps, sets } = req.body;
@@ -93,7 +90,7 @@ app.post("/exercise", async (req, res) => {
       return res.status(404).json({ message: "Utente non trovato" });
     }
 
-    user.exercises.push({ name, weight, reps, sets, date: new Date() }); // 👈 Aggiunto "sets"
+    user.exercises.push({ name, weight, reps, sets, date: new Date() });
     await user.save();
 
     res.json({ message: "Esercizio aggiunto con successo!", exercises: user.exercises });
@@ -103,7 +100,7 @@ app.post("/exercise", async (req, res) => {
   }
 });
 
-// ✅ Endpoint per ottenere gli esercizi di un utente
+// ✅ Ottenere gli esercizi di un utente
 app.get("/exercises/:username", async (req, res) => {
   try {
     const { username } = req.params;
@@ -113,14 +110,14 @@ app.get("/exercises/:username", async (req, res) => {
       return res.status(404).json({ message: "Utente non trovato" });
     }
 
-    res.json(user.exercises.length > 0 ? user.exercises : []); // Evita errore se non ci sono esercizi
+    res.json(user.exercises.length > 0 ? user.exercises : []);
   } catch (err) {
     console.error("❌ Errore durante il recupero degli esercizi:", err);
     res.status(500).json({ message: "Errore del server" });
   }
 });
 
-// ✅ Endpoint per rimuovere un esercizio
+// ✅ Rimuovere un esercizio
 app.delete("/exercise/:username/:exerciseId", async (req, res) => {
   try {
     const { username, exerciseId } = req.params;
@@ -130,17 +127,16 @@ app.delete("/exercise/:username/:exerciseId", async (req, res) => {
       return res.status(404).json({ message: "Utente non trovato" });
     }
 
-    // Filtra e rimuovi l'esercizio con l'ID specificato
     user.exercises = user.exercises.filter(exercise => exercise._id.toString() !== exerciseId);
     await user.save();
 
     res.json({ message: "Esercizio rimosso con successo", exercises: user.exercises });
   } catch (err) {
     console.error("❌ Errore durante la rimozione dell'esercizio:", err);
-    res.status(500).json({ message: "Errore del server durante la rimozione dell'esercizio" });
+    res.status(500).json({ message: "Errore del server" });
   }
 });
 
-// Avvio del server
+// ✅ Avvio del server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server in ascolto sulla porta ${PORT}`));
