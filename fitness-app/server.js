@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");  // Modifica qui: usa bcryptjs al posto di bcrypt
 
 const app = express();
 
@@ -47,7 +47,7 @@ app.post("/register", async (req, res) => {
     }
 
     // Cripta la password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);  // Usa bcryptjs qui
     user = new User({ username, password: hashedPassword, exercises: [] });
     await user.save();
 
@@ -68,7 +68,7 @@ app.post("/login", async (req, res) => {
       return res.status(404).json({ message: "Utente non trovato" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);  // Usa bcryptjs qui
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Password errata" });
     }
