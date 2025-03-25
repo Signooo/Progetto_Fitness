@@ -18,7 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "chmod +x node_modules/.bin/react-scripts"
+    "postinstall": "chmod +x node_modules/.bin/react-scripts && chmod +x node_modules/serve/bin/serve.js"
   },
   "eslintConfig": {
     "extends": [
