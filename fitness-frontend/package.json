@@ -8,17 +8,15 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "^3.0.1",
     "recharts": "^2.15.1",
-    "web-vitals": "^4.2.4",
-    "serve": "^14.2.0"
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
     "start": "node node_modules/serve/bin/serve.js -s build -l $PORT",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "chmod +x node_modules/.bin/react-scripts && chmod +x node_modules/serve/bin/serve.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +37,6 @@
     ]
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18"
   }
 }
