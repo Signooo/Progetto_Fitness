@@ -10,11 +10,12 @@
     "react-router-dom": "^7.2.0",
     "recharts": "^2.15.1",
     "web-vitals": "^4.2.4",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "serve": "^14.2.0"
   },
   "scripts": {
     "start": "node node_modules/serve/bin/serve.js -s build -l $PORT",
-    "build": "react-scripts build",
+    "build": "npx react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
